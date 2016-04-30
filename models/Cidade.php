@@ -20,7 +20,7 @@ class Cidade extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%tb_cidade}}';
+        return 'tb_cidade';
     }
 
     /**
@@ -40,7 +40,7 @@ class Cidade extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_cidade' => 'Id Cidade',
+            'id_cidade' => 'Cidade',
             'nome' => 'Nome',
             'estado' => 'Estado',
         ];
