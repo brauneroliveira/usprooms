@@ -11,7 +11,7 @@ use Yii;
  * @property string $nome
  * @property string $descricao
  *
- * @property TbSala[] $tbSalas
+ * @property Sala[] $salas
  */
 class Categoria extends \yii\db\ActiveRecord
 {
@@ -29,8 +29,7 @@ class Categoria extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_categoria', 'nome'], 'required'],
-            [['id_categoria'], 'integer'],
+            [['nome'], 'required'],
             [['nome'], 'string', 'max' => 50],
             [['descricao'], 'string', 'max' => 300],
         ];
@@ -51,8 +50,8 @@ class Categoria extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTbSalas()
+    public function getSalas()
     {
-        return $this->hasMany(TbSala::className(), ['categoria' => 'id_categoria']);
+        return $this->hasMany(Sala::className(), ['id_categoria' => 'id_categoria']);
     }
 }

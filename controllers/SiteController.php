@@ -51,6 +51,11 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
+    
+    public function actionTeste()
+    {
+        return $this->render('teste');
+    }
 
     public function actionLogin()
     {
