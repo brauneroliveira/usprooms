@@ -12,17 +12,22 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_cidade')->textInput() ?>
-
     <?= $form->field($model, 'nome_completo')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'data_nascimento')->textInput() ?>
+    <?= $form->field($model, 'data_nascimento')->widget(\yii\jui\DatePicker::classname(), [
+    'language' => 'pt-BR',
+    'dateFormat' => 'dd/MM/yyyy',
+])  ?>
 
     <?= $form->field($model, 'telefone')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'id_cidade')->textInput() ?>
 
-    <?= $form->field($model, 'senha')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'chaveSenha')->passwordInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'confirmarSenha')->passwordInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
