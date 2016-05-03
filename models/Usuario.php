@@ -43,13 +43,13 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             ['confirmarSenha', 'compare', 'compareAttribute' => 'chaveSenha', 'operator' => '=='],
             [['confirmarSenha', 'chaveSenha'], 'string', 'min' => 8],
             ['data_nascimento', 'date', 'format' => 'dd/MM/yyyy'],
+            ['data_nascimento', 'validarIdade', 'skipOnError' => false],
             [['nome_completo'], 'string', 'max' => 45],
             [['telefone'], 'string', 'max' => 15],
             [['email'], 'string', 'max' => 100],
             [['senha'], 'string', 'max' => 60],
             [['chave_autenticacao'], 'string', 'max' => 32],
             ['email', 'unique'],
-            ['idade', 'validarIdade'],
             [['id_cidade'], 'exist', 'skipOnError' => true, 'targetClass' => Cidade::className(), 'targetAttribute' => ['id_cidade' => 'id_cidade']],
         ];
     }
@@ -71,16 +71,16 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         ];
     }
     
-    public function validarIdade($attribute)
+    public function validarIdade($attribute, $params)
     {
-        $actualDate = \DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
-        $userDate = \DateTime::createFromFormat('d/m/Y', $attribute);
+        $currentDate = \DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
+        $userDate = \DateTime::createFromFormat('d/m/Y', $this->$attribute);
         
-        $interval = $actualDate->diff($userDate);
+        $interval = $currentDate->diff($userDate);
         
         if($interval->y<13){
-            $this->addError($attribute, 'You must be at least 13 years old.');
-         }
+            $this->addError('data_nascimento', 'You must be at least 13 years old.');
+        }
     }
 
     /**
@@ -99,6 +99,7 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 $auxDateTime = \DateTime::createFromFormat('d/m/Y', $this->data_nascimento);
                 $this->data_nascimento = $auxDateTime->format('Y-m-d');
                 $this->nome_completo = mb_strtoupper($this->nome_completo, 'UTF-8');
+                $this->telefone = preg_replace("/[^0-9]/","",$this->telefone);
                 $this->chave_autenticacao = Yii::$app->security->generateRandomString();
                 $this->senha = Yii::$app->getSecurity()->generatePasswordHash($this->chaveSenha);
             }
