@@ -37,17 +37,19 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['id_cidade', 'email', 'senha', 'chave_autenticacao', 'confirmarSenha'], 'required'],
+            [['id_cidade', 'email', 'senha', 'chave_autenticacao', 'confirmarSenha', 'data_nascimento'], 'required'],
             [['id_cidade'], 'integer'],
             [['email'], 'email'],
-            ['confirmarSenha', 'compare', 'compareValue' => 'chaveSenha', 'operator' => '=='],
-            [['data_nascimento', 'confirmarSenha'], 'safe'],
+            ['confirmarSenha', 'compare', 'compareAttribute' => 'chaveSenha', 'operator' => '=='],
+            [['confirmarSenha', 'chaveSenha'], 'string', 'min' => 8],
+            ['data_nascimento', 'date', 'format' => 'dd/MM/yyyy'],
             [['nome_completo'], 'string', 'max' => 45],
-            [['telefone'], 'string', 'max' => 11],
+            [['telefone'], 'string', 'max' => 15],
             [['email'], 'string', 'max' => 100],
             [['senha'], 'string', 'max' => 60],
             [['chave_autenticacao'], 'string', 'max' => 32],
-            [['email'], 'unique'],
+            ['email', 'unique'],
+            ['idade', 'validarIdade'],
             [['id_cidade'], 'exist', 'skipOnError' => true, 'targetClass' => Cidade::className(), 'targetAttribute' => ['id_cidade' => 'id_cidade']],
         ];
     }
@@ -68,6 +70,18 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'chave_autenticacao' => 'Chave Autenticacao',
         ];
     }
+    
+    public function validarIdade($attribute)
+    {
+        $actualDate = \DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
+        $userDate = \DateTime::createFromFormat('d/m/Y', $attribute);
+        
+        $interval = $actualDate->diff($userDate);
+        
+        if($interval->y<13){
+            $this->addError($attribute, 'You must be at least 13 years old.');
+         }
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -83,7 +97,8 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             if ($this->isNewRecord) {
                 
                 $auxDateTime = \DateTime::createFromFormat('d/m/Y', $this->data_nascimento);
-                $this->data_nascimento = $auxDateTime->format('y-m-d');
+                $this->data_nascimento = $auxDateTime->format('Y-m-d');
+                $this->nome_completo = mb_strtoupper($this->nome_completo, 'UTF-8');
                 $this->chave_autenticacao = Yii::$app->security->generateRandomString();
                 $this->senha = Yii::$app->getSecurity()->generatePasswordHash($this->chaveSenha);
             }

@@ -19,7 +19,9 @@ use yii\widgets\ActiveForm;
     'dateFormat' => 'dd/MM/yyyy',
 ])  ?>
 
-    <?= $form->field($model, 'telefone')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'telefone')->widget(\yii\widgets\MaskedInput::className(), [
+    'mask' => '(99) 99999-9999',
+    ]) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
     
