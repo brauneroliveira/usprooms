@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 
 <div class="usuario-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin();?>
 
     <?= $form->field($model, 'nome_completo')->textInput(['maxlength' => true]) ?>
 
@@ -25,7 +25,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
     
-    <?= $form->field($model, 'id_cidade')->textInput() ?>
+    <?= $form->field($model, 'estado')->dropDownList(app\models\Cidade::getEstados()) ?>
+    
+    <?= $form->field($model, 'cidade')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'chaveSenha')->passwordInput(['maxlength' => true]) ?>
     
@@ -36,5 +38,9 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?php ActiveForm::end(); ?>
+    
+    <?php var_dump($model->errors); ?>
+    
+    
 
 </div>

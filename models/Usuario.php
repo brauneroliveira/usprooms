@@ -22,6 +22,8 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     public $chaveSenha;
     public $confirmarSenha;
+    public $cidade;
+    public $estado;
     
     /**
      * @inheritdoc
@@ -37,8 +39,8 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['id_cidade', 'email', 'senha', 'chave_autenticacao', 'confirmarSenha', 'data_nascimento'], 'required'],
-            [['id_cidade'], 'integer'],
+            [['email', 'chaveSenha', 'confirmarSenha', 'data_nascimento', 'cidade', 'estado'], 'required'],
+            //[['id_cidade'], 'integer'],
             [['email'], 'email'],
             ['confirmarSenha', 'compare', 'compareAttribute' => 'chaveSenha', 'operator' => '=='],
             [['confirmarSenha', 'chaveSenha'], 'string', 'min' => 8],
@@ -50,7 +52,7 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['senha'], 'string', 'max' => 60],
             [['chave_autenticacao'], 'string', 'max' => 32],
             ['email', 'unique'],
-            [['id_cidade'], 'exist', 'skipOnError' => true, 'targetClass' => Cidade::className(), 'targetAttribute' => ['id_cidade' => 'id_cidade']],
+            //[['id_cidade'], 'exist', 'skipOnError' => true, 'targetClass' => Cidade::className(), 'targetAttribute' => ['id_cidade' => 'id_cidade']],
         ];
     }
 
@@ -96,12 +98,36 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {
                 
+                /*
+                 * Procedimento para converter a data inserida pelo usuário no formato do banco de dados
+                 */
                 $auxDateTime = \DateTime::createFromFormat('d/m/Y', $this->data_nascimento);
                 $this->data_nascimento = $auxDateTime->format('Y-m-d');
+                
+                /*
+                 * Transformação do nome do usuário em caixa alta
+                 */
                 $this->nome_completo = mb_strtoupper($this->nome_completo, 'UTF-8');
+                
+                /*
+                 * Remoção dos caracteres de máscara do telefone para inserção no banco
+                 */
                 $this->telefone = preg_replace("/[^0-9]/","",$this->telefone);
+                
+                /*
+                 * Geração da chave de autenticação e do hash da senha do usuário
+                 */
                 $this->chave_autenticacao = Yii::$app->security->generateRandomString();
                 $this->senha = Yii::$app->getSecurity()->generatePasswordHash($this->chaveSenha);
+                
+                /*
+                 * Criação de uma nova cidade para atrelar ao usuário
+                 */
+                $cidade = new Cidade();
+                $cidade->nome = $this->cidade;
+                $cidade->estado = $this->estado;
+                $cidade->save();
+                $this->id_cidade = $cidade->id_cidade;
             }
             return true;
         }
