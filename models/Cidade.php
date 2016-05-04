@@ -29,8 +29,10 @@ class Cidade extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['nome', 'estado'], 'required'],
             [['nome'], 'string', 'max' => 100],
             [['estado'], 'string', 'max' => 2],
+            ['nome', 'match', 'pattern' => '/^[a-zA-Z\s]*$/', 'message' => 'O nome da cidade só pode conter letras e espaços em branco.'],
         ];
     }
 

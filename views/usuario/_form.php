@@ -8,6 +8,12 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+<?php
+
+$this->title = 'Página 3. Página de Cadastro';
+
+?>
+
 <div class="usuario-form">
 
     <?php $form = ActiveForm::begin();?>
@@ -39,8 +45,4 @@ use yii\widgets\ActiveForm;
 
     <?php ActiveForm::end(); ?>
     
-    <?php var_dump($model->errors); ?>
-    
-    
-
 </div>

@@ -36,9 +36,14 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Categorias', 'url' => ['/categoria/index']],
-            ['label' => 'Usuários', 'url' => ['/usuario/index']],
+             [
+            'label' => 'Categorias', 'url' => ['/categoria/index'],
+            'items' => [
+                 ['label' => 'ICMC-USP', 'url' => '#'],
+                
+                 ['label' => 'EESC-USP', 'url' => '#'],
+            ],
+        ],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
@@ -67,7 +72,7 @@ AppAsset::register($this);
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; USProoms <?= date('Y') ?></p>
-        <span>Desenvolvido por Brauner e Daniel</span>
+        <span>&nbsp; - Desenvolvido por Brauner e Daniel</span>
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>

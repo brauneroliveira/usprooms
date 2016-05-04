@@ -74,6 +74,13 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         ];
     }
     
+    public function attributeHints()
+    {
+        return [
+            'nome_completo' => 'Seu nome deve conter apenas letras [a-z].',
+        ];
+    }
+    
     public function validarIdade($attribute, $params)
     {
         $currentDate = \DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
@@ -141,7 +148,7 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                  * Criação de uma nova cidade para atrelar ao usuário
                  */
                 $cidade = new Cidade();
-                $cidade->nome = $this->cidade;
+                $cidade->nome = mb_strtoupper($this->cidade, 'UTF-8');
                 $cidade->estado = $this->estado;
                 $cidade->save();
                 $this->id_cidade = $cidade->id_cidade;
