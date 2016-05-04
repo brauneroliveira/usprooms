@@ -87,13 +87,17 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     }
     
     public function validarSenha($attribute, $params){
+        
         if(!preg_match('/[a-z]/', $this->$attribute)){
             $this->addError('chaveSenha', 'You password must contain at least one lowercase letter [a-z].');
-        }elseif(!preg_match('/[A-Z]/', $this->$attribute)){
+        }
+        if(!preg_match('/[A-Z]/', $this->$attribute)){
             $this->addError('chaveSenha', 'You password must contain at least one uppercase letter [A-Z].');
-        }elseif(!preg_match('/[0-9]/', $this->$attribute)){
+        }
+        if(!preg_match('/[0-9]/', $this->$attribute)){
             $this->addError('chaveSenha', 'You password must contain at least one digit [0-9].');
-        }elseif(!preg_match('/[!@#$%\*]/', $this->$attribute)){
+        }
+        if(!preg_match('/[!@#$%\*]/', $this->$attribute)){
             $this->addError('chaveSenha', 'You password must contain at least one special character [!@#$%*].');
         }
     }
@@ -172,5 +176,9 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public static function findIdentityByAccessToken($token, $type = null) {
         
     }
-
+    
+    public static function findByUsername($email)
+    { 
+        return Usuario::findOne(['email' => $email]);
+    }
 }
