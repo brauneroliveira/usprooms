@@ -51,6 +51,7 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['email'], 'string', 'max' => 100],
             [['senha'], 'string', 'max' => 60],
             [['chave_autenticacao'], 'string', 'max' => 32],
+            ['chaveSenha', 'validarSenha'],
             ['email', 'unique'],
             //[['id_cidade'], 'exist', 'skipOnError' => true, 'targetClass' => Cidade::className(), 'targetAttribute' => ['id_cidade' => 'id_cidade']],
         ];
@@ -82,6 +83,18 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         
         if($interval->y<13){
             $this->addError('data_nascimento', 'You must be at least 13 years old.');
+        }
+    }
+    
+    public function validarSenha($attribute, $params){
+        if(!preg_match('/[a-z]/', $this->$attribute)){
+            $this->addError('chaveSenha', 'You password must contain at least one lowercase letter [a-z].');
+        }elseif(!preg_match('/[A-Z]/', $this->$attribute)){
+            $this->addError('chaveSenha', 'You password must contain at least one uppercase letter [A-Z].');
+        }elseif(!preg_match('/[0-9]/', $this->$attribute)){
+            $this->addError('chaveSenha', 'You password must contain at least one digit [0-9].');
+        }elseif(!preg_match('/[!@#$%\*]/', $this->$attribute)){
+            $this->addError('chaveSenha', 'You password must contain at least one special character [!@#$%*].');
         }
     }
 
