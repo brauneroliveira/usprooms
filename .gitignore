@@ -1,1 +1,4 @@
 /deploy
+config/db.php
+vendor/*
+nbproject/
