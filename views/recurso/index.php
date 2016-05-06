@@ -6,29 +6,24 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Salas';
+$this->title = 'Recursos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="sala-index">
+<div class="recurso-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Sala', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Recurso', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_sala',
-            'id_autor',
-            'codigo',
+            'id_recurso',
             'nome',
             'descricao',
-            // 'tipo',
-            // 'latitude',
-            // 'longitude',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

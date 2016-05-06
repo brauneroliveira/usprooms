@@ -9,20 +9,28 @@ use Yii;
  *
  * @property integer $id_sala
  * @property integer $id_autor
- * @property integer $id_categoria
  * @property string $codigo
  * @property string $nome
  * @property string $descricao
+ * @property string $tipo
+ * @property string $latitude
+ * @property string $longitude
  *
  * @property Avaliacao[] $avaliacaos
  * @property Usuario[] $idUsuarios
  * @property Comentario[] $comentarios
  * @property Usuario[] $idUsuarios0
- * @property Categoria $idCategoria
  * @property Usuario $idAutor
+ * @property SalaRecurso[] $salaRecursos
+ * @property Recurso[] $idRecursos
+ * @property SalaUnidade $salaUnidade
+ * @property Unidade[] $idCategorias
  */
 class Sala extends \yii\db\ActiveRecord
 {
+    public $unidade;
+    public $recurso;
+   // public $valor;
     /**
      * @inheritdoc
      */
@@ -37,13 +45,14 @@ class Sala extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_autor', 'id_categoria', 'codigo'], 'required'],
-            [['id_autor', 'id_categoria'], 'integer'],
+            [['codigo'], 'required'],
+            //[['id_autor'], 'integer'],
             [['codigo', 'nome'], 'string', 'max' => 50],
             [['descricao'], 'string', 'max' => 300],
+            [['latitude'], 'string', 'max' => 100],
+            [['longitude'], 'string', 'max' => 45],
             [['codigo'], 'unique'],
-            [['id_categoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categoria::className(), 'targetAttribute' => ['id_categoria' => 'id_categoria']],
-            [['id_autor'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['id_autor' => 'id_usuario']],
+            //[['id_autor'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['id_autor' => 'id_usuario']],
         ];
     }
 
@@ -55,13 +64,30 @@ class Sala extends \yii\db\ActiveRecord
         return [
             'id_sala' => 'Id Sala',
             'id_autor' => 'Id Autor',
-            'id_categoria' => 'Id Categoria',
             'codigo' => 'Codigo',
             'nome' => 'Nome',
             'descricao' => 'Descricao',
+            'tipo' => 'Tipo',
+            'latitude' => 'Latitude',
+            'longitude' => 'Longitude',
         ];
     }
+    
+    
+    public function beforeSave($insert)
+    {
+           if (parent::beforeSave($insert)) {
+            if ($this->isNewRecord) {     
+               
+                $this->id_autor = Yii::$app->getUser()->id;
+               
+            }
+            return true;
+        }
+        return false;
+    }
 
+    
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -97,16 +123,40 @@ class Sala extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdCategoria()
+    public function getIdAutor()
     {
-        return $this->hasOne(Categoria::className(), ['id_categoria' => 'id_categoria']);
+        return $this->hasOne(Usuario::className(), ['id_usuario' => 'id_autor']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdAutor()
+    public function getSalaRecursos()
     {
-        return $this->hasOne(Usuario::className(), ['id_usuario' => 'id_autor']);
+        return $this->hasMany(SalaRecurso::className(), ['id_sala' => 'id_sala']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdRecursos()
+    {
+        return $this->hasMany(Recurso::className(), ['id_recurso' => 'id_recurso'])->viaTable('tb_sala_recurso', ['id_sala' => 'id_sala']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSalaUnidade()
+    {
+        return $this->hasOne(SalaUnidade::className(), ['id_sala' => 'id_sala']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdCategorias()
+    {
+        return $this->hasMany(Unidade::className(), ['id_categoria' => 'id_categoria'])->viaTable('tb_sala_unidade', ['id_sala' => 'id_sala']);
     }
 }

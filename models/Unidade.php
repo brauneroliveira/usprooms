@@ -5,22 +5,23 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "tb_categoria".
+ * This is the model class for table "tb_unidade".
  *
  * @property integer $id_categoria
  * @property string $nome
  * @property string $descricao
  *
- * @property Sala[] $salas
+ * @property SalaUnidade[] $salaUnidades
+ * @property Sala[] $idSalas
  */
-class Categoria extends \yii\db\ActiveRecord
+class Unidade extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'tb_categoria';
+        return 'tb_unidade';
     }
 
     /**
@@ -50,8 +51,16 @@ class Categoria extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSalas()
+    public function getSalaUnidades()
     {
-        return $this->hasMany(Sala::className(), ['id_categoria' => 'id_categoria']);
+        return $this->hasMany(SalaUnidade::className(), ['id_categoria' => 'id_categoria']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdSalas()
+    {
+        return $this->hasMany(Sala::className(), ['id_sala' => 'id_sala'])->viaTable('tb_sala_unidade', ['id_categoria' => 'id_categoria']);
     }
 }

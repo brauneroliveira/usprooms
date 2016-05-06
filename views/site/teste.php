@@ -12,14 +12,21 @@ $this->title = 'My Yii Application';
 //$modelo->descricao = 'Bloco X';
 //$modelo->save();
 
-$modelo = \app\models\Categoria::findOne(['nome'=>'ICMC']);
-$modelo->descricao = 'Bloco Ronaldo';
+//$modelo = \app\models\Categoria::findOne(['nome'=>'ICMC']);
+//$modelo->descricao = 'Bloco Ronaldo';
 //var_dump($modelo);
 //$modelo->save();
 
-echo $modelo->descricao;
+$a=[0=>'1'];
 
+echo $a[0];
 
+$senha='1234';
+$chave=  Yii::$app->security->generateRandomString();
+$senha = Yii::$app->security->generatePasswordHash($senha);
+echo $chave;
+echo "<br>";
+echo $senha;
 
 ?>
     
