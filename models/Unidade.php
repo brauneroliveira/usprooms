@@ -7,7 +7,7 @@ use Yii;
 /**
  * This is the model class for table "tb_unidade".
  *
- * @property integer $id_categoria
+ * @property integer $id_unidade
  * @property string $nome
  * @property string $descricao
  *
@@ -42,7 +42,7 @@ class Unidade extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_categoria' => 'Id Categoria',
+            'id_unidade' => 'Id Unidade',
             'nome' => 'Nome',
             'descricao' => 'Descricao',
         ];
@@ -53,7 +53,7 @@ class Unidade extends \yii\db\ActiveRecord
      */
     public function getSalaUnidades()
     {
-        return $this->hasMany(SalaUnidade::className(), ['id_categoria' => 'id_categoria']);
+        return $this->hasMany(SalaUnidade::className(), ['id_unidade' => 'id_unidade']);
     }
 
     /**
@@ -61,6 +61,6 @@ class Unidade extends \yii\db\ActiveRecord
      */
     public function getIdSalas()
     {
-        return $this->hasMany(Sala::className(), ['id_sala' => 'id_sala'])->viaTable('tb_sala_unidade', ['id_categoria' => 'id_categoria']);
+        return $this->hasMany(Sala::className(), ['id_sala' => 'id_sala'])->viaTable('tb_sala_unidade', ['id_unidade' => 'id_unidade']);
     }
 }

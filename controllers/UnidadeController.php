@@ -66,7 +66,7 @@ class UnidadeController extends Controller
         $model = new Unidade();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_categoria]);
+            return $this->redirect(['view', 'id' => $model->id_unidade]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,7 +85,7 @@ class UnidadeController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_categoria]);
+            return $this->redirect(['view', 'id' => $model->id_unidade]);
         } else {
             return $this->render('update', [
                 'model' => $model,

@@ -5,7 +5,7 @@ use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Sala */
-
+$modelSalaUnidade = app\models\SalaUnidade::find()->where(['id_sala' => $model->id_sala])->one();
 $this->title = $model->id_sala;
 $this->params['breadcrumbs'][] = ['label' => 'Salas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;

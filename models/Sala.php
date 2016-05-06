@@ -28,8 +28,8 @@ use Yii;
  */
 class Sala extends \yii\db\ActiveRecord
 {
-    public $unidade;
-    public $recurso;
+    public $unidade_v;
+    public $recurso_v;
    // public $valor;
     /**
      * @inheritdoc
@@ -50,7 +50,7 @@ class Sala extends \yii\db\ActiveRecord
             [['codigo', 'nome'], 'string', 'max' => 50],
             [['descricao'], 'string', 'max' => 300],
             [['latitude'], 'string', 'max' => 100],
-            [['longitude'], 'string', 'max' => 45],
+            [['longitude'], 'string', 'max' => 100],
             [['codigo'], 'unique'],
             //[['id_autor'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['id_autor' => 'id_usuario']],
         ];
@@ -79,6 +79,14 @@ class Sala extends \yii\db\ActiveRecord
            if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {     
                
+                //var_dump($unidade_v); 
+                
+                $model_SalaUnidade = new SalaUnidade();
+                $model_SalaUnidade->id_sala = $this->id_sala;
+                $model_SalaUnidade->id_categoria = $this->unidade_v;
+                $model_SalaUnidade->save();
+
+                
                 $this->id_autor = Yii::$app->getUser()->id;
                
             }
@@ -155,8 +163,8 @@ class Sala extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdCategorias()
+    public function getIdUnidades()
     {
-        return $this->hasMany(Unidade::className(), ['id_categoria' => 'id_categoria'])->viaTable('tb_sala_unidade', ['id_sala' => 'id_sala']);
+        return $this->hasMany(Unidade::className(), ['id_unidade' => 'id_unidade'])->viaTable('tb_sala_unidade', ['id_sala' => 'id_sala']);
     }
 }
