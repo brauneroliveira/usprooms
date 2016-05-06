@@ -40,7 +40,6 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             [['email', 'chaveSenha', 'confirmarSenha', 'data_nascimento', 'cidade', 'estado'], 'required'],
-            //[['id_cidade'], 'integer'],
             [['email'], 'email'],
             ['confirmarSenha', 'compare', 'compareAttribute' => 'chaveSenha', 'operator' => '=='],
             [['confirmarSenha', 'chaveSenha'], 'string', 'min' => 8],
@@ -53,7 +52,6 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['chave_autenticacao'], 'string', 'max' => 32],
             ['chaveSenha', 'validarSenha'],
             ['email', 'unique'],
-            //[['id_cidade'], 'exist', 'skipOnError' => true, 'targetClass' => Cidade::className(), 'targetAttribute' => ['id_cidade' => 'id_cidade']],
         ];
     }
 
