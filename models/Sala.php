@@ -30,7 +30,7 @@ class Sala extends \yii\db\ActiveRecord
 {
     public $unidade_v;
     public $recurso_v;
-   // public $valor;
+    //public $tipo;
     /**
      * @inheritdoc
      */
@@ -78,13 +78,13 @@ class Sala extends \yii\db\ActiveRecord
     {
            if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {     
-               
+               //$this->tipo = $tipo;
                 //var_dump($unidade_v); 
                 
-                $model_SalaUnidade = new SalaUnidade();
-                $model_SalaUnidade->id_sala = $this->id_sala;
-                $model_SalaUnidade->id_categoria = $this->unidade_v;
-                $model_SalaUnidade->save();
+               // $model_SalaUnidade = new SalaUnidade();
+                //$model_SalaUnidade->id_sala = $this->id_sala;
+                //$model_SalaUnidade->id_categoria = $this->unidade_v;
+                //$model_SalaUnidade->save();
 
                 
                 $this->id_autor = Yii::$app->getUser()->id;
