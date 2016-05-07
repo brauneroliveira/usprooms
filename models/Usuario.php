@@ -79,6 +79,11 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         ];
     }
     
+    public function getIdSalas()
+    {
+        return $this->hasMany(Sala::className(), ['id_sala' => 'id_sala'])->viaTable('tb_comentario', ['id_usuario' => 'id_usuario']);
+    }
+    
     public function validarIdade($attribute, $params)
     {
         $currentDate = \DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
