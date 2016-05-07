@@ -30,7 +30,7 @@ class Sala extends \yii\db\ActiveRecord
 {
     public $unidade_v;
     public $recurso_v;
-    //public $tipo;
+    //public $tipo_v;
     /**
      * @inheritdoc
      */
@@ -45,8 +45,8 @@ class Sala extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['codigo'], 'required'],
-            //[['id_autor'], 'integer'],
+            [['codigo', 'recurso_v'], 'required'],
+            [['tipo'], 'string', 'max' => 45],
             [['codigo', 'nome'], 'string', 'max' => 50],
             [['descricao'], 'string', 'max' => 300],
             [['latitude'], 'string', 'max' => 100],
@@ -78,7 +78,12 @@ class Sala extends \yii\db\ActiveRecord
     {
            if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {     
-               //$this->tipo = $tipo;
+               
+               //$this->unidade_v
+                //$order->link('items', $item);        
+                        
+                //$this->tipo = $this->tipo_v;
+               //$this->tipo->save();
                 //var_dump($unidade_v); 
                 
                // $model_SalaUnidade = new SalaUnidade();
@@ -94,7 +99,28 @@ class Sala extends \yii\db\ActiveRecord
         }
         return false;
     }
+    
+        public function afterSave($insert, $changedAttributes)
+    { //die();
+          // if (parent::afterSave($insert, $changedAttributes)) {
+                
+                $modeloUnidade = \app\models\Unidade::find()->where('id_unidade' === $this->unidade_v)->one();
+                $this->link('idUnidades', $modeloUnidade);
+                
+                
+                
+                 foreach ($this->recurso_v as $recurso) {
+                 $modeloRecurso = \app\models\Recurso::findOne($recurso);
+                 $this->link('idRecursos', $modeloRecurso);
+                }
+               
+            
+           // return true;
+        //}
+        return false;
+    }
 
+   
     
     /**
      * @return \yii\db\ActiveQuery
