@@ -23,6 +23,11 @@ $this->title = 'Página 3. Página de Cadastro';
     <?= $form->field($model, 'data_nascimento')->widget(\yii\jui\DatePicker::classname(), [
     'language' => 'pt-BR',
     'dateFormat' => 'dd/MM/yyyy',
+        'clientOptions' => [
+    'changeMonth' => true,
+    'changeYear' => true,
+            'yearRange' => '1916:2016'
+            ]
 ])  ?>
 
     <?= $form->field($model, 'telefone')->widget(\yii\widgets\MaskedInput::className(), [
