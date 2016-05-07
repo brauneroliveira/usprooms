@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Sala */
@@ -39,4 +40,38 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+    <div>
+        
+        <?php
+        
+        //var_dump($model->getComentarios()->all());
+        
+        foreach ($model->getComentarios()->all() as $_comentario){
+            echo '<p>'.$_comentario->comentario.'</p>';
+        }
+        
+        ?>
+        
+    </div>
+    
+    <div>
+    <?php 
+        
+        $form = ActiveForm::begin();
+        $form->action = yii\helpers\Url::to(['comentario/create']);
+        $comentario = new \app\models\ComentarioForm();
+        
+        ?>
+        
+        <?= $form->field($comentario, 'comentario')->textarea(['maxlength' => true]) ?>
+        <?= Html::hiddenInput('id_sala', $model->id_sala) ?>
+
+        <div class="form-group">
+        <?= Html::submitButton('Comentar', ['class' => 'btn btn-success']) ?>
+        </div>
+
+    <?php ActiveForm::end(); ?>
+        
+    </div>
+    
 </div>

@@ -36,14 +36,15 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-             [
-            'label' => 'Categorias', 'url' => ['/categoria/index'],
-            'items' => [
+             ['label' => 'Categorias', 'url' => ['/categoria/index'],
+                'items' => [
                  ['label' => 'ICMC-USP', 'url' => '#'],
-                
                  ['label' => 'EESC-USP', 'url' => '#'],
             ],
         ],
+            Yii::$app->user->isGuest ? (
+                ['label' => 'Cadastre-se', 'url' => ['/usuario/create']]) : (''),
+            
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
