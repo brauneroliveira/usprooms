@@ -8,6 +8,8 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\UploadForm;
+use yii\web\UploadedFile;
 
 /**
  * SalaController implements the CRUD actions for Sala model.
@@ -64,8 +66,8 @@ class SalaController extends Controller
     public function actionCreate()
     {
         $model = new Sala();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+        if ($model->load(Yii::$app->request->post()) && $model->save() && $model->upload()) {
             return $this->redirect(['view', 'id' => $model->id_sala]);
         } else {
             return $this->render('create', [
@@ -121,4 +123,25 @@ class SalaController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    public function actionUpload()
+    {
+        $model = new UploadForm();
+
+        if (Yii::$app->request->isPost) {
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            if ($model->upload()) {
+                // file is uploaded successfully
+                return;
+            }
+        }
+
+        return $this->render('upload', ['model' => $model]);
+    }
 }
+
+
+
+
+
+    
+

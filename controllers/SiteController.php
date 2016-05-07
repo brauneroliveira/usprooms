@@ -8,6 +8,8 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use yii\web\UploadedFile;
+
 
 class SiteController extends Controller
 {
@@ -54,7 +56,17 @@ class SiteController extends Controller
     
     public function actionTeste()
     {
-        return $this->render('teste');
+        $model = new \app\Models\UploadForm();
+
+        if (Yii::$app->request->isPost) {
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            if ($model->upload()) {
+                // file is uploaded successfully
+                return;
+            }
+        }
+
+        return $this->render('teste', ['model' => $model]);
     }
 
     public function actionLogin()

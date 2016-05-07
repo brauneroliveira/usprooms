@@ -1,34 +1,26 @@
 <?php
 
+use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
-<?php
 
-//$modelo = new \app\models\Categoria();
-//$modelo->nome = 'ICMC';
-//$modelo->descricao = 'Bloco X';
-//$modelo->save();
 
-//$modelo = \app\models\Categoria::findOne(['nome'=>'ICMC']);
-//$modelo->descricao = 'Bloco Ronaldo';
-//var_dump($modelo);
-//$modelo->save();
+<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);
+        
+        $form->action = yii\helpers\Url::to(['site/teste']);
+        
+        ?>
 
-$a=[0=>'1'];
+    <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
 
-echo $a[0];
+    <button>Submit</button>
 
-$senha='1234';
-$chave=  Yii::$app->security->generateRandomString();
-$senha = Yii::$app->security->generatePasswordHash($senha);
-echo $chave;
-echo "<br>";
-echo $senha;
+<?php ActiveForm::end() ?>
 
-?>
+
     
  
 </div>

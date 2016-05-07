@@ -30,6 +30,7 @@ class Sala extends \yii\db\ActiveRecord
 {
     public $unidade_v;
     public $recurso_v;
+    public $imageFiles;
     //public $tipo_v;
     /**
      * @inheritdoc
@@ -45,13 +46,14 @@ class Sala extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['codigo', 'recurso_v'], 'required'],
+            [['codigo', 'recurso_v', 'imageFiles'], 'required'],
             [['tipo'], 'string', 'max' => 45],
             [['codigo', 'nome'], 'string', 'max' => 50],
             [['descricao'], 'string', 'max' => 300],
             [['latitude'], 'string', 'max' => 100],
             [['longitude'], 'string', 'max' => 100],
             [['codigo'], 'unique'],
+            //[['imageFiles'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'maxFiles' => 4],
             //[['id_autor'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['id_autor' => 'id_usuario']],
         ];
     }
@@ -108,16 +110,29 @@ class Sala extends \yii\db\ActiveRecord
                 $this->link('idUnidades', $modeloUnidade);
                 
                 
-                
                  foreach ($this->recurso_v as $recurso) {
                  $modeloRecurso = \app\models\Recurso::findOne($recurso);
                  $this->link('idRecursos', $modeloRecurso);
                 }
-               
+                
             
            // return true;
         //}
         return false;
+    }
+    
+        public function upload()
+    {
+            var_dump($this);
+                die();
+        if ($this->validate()) { 
+            foreach ($this->imageFiles as $file) {
+                $file->saveAs('assets/images/upload/'. $this->id_sala . '/'. $file->baseName . '.' . $file->extension);
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
    

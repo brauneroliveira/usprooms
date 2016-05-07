@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
     ?>
     
     
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'codigo')->textInput(['maxlength' => true]) ?>
 
@@ -30,6 +30,8 @@ use yii\widgets\ActiveForm;
     
     <?= $form->field($model, 'recurso_v')->checkboxList(yii\helpers\ArrayHelper::map($modeloRecurso, 'id_recurso', 'nome')) ?>
 
+    <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
+        
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
