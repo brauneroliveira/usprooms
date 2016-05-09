@@ -66,10 +66,21 @@ class SalaController extends Controller
     public function actionCreate()
     {
         $model = new Sala();
-        $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
-        if ($model->load(Yii::$app->request->post()) && $model->save() && $model->upload()) {
+        //$model->imageFile = UploadedFile::getInstances($model, 'imageFile');
+        //actionUpload();
+        //die();
+        if ($model->load(Yii::$app->request->post())) {
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            //$model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            //var_dump($model->imageFile);
+            //die();
+            $model->save();
+            $model->upload();
+            
             return $this->redirect(['view', 'id' => $model->id_sala]);
-        } else {
+        } 
+        
+        else {
             return $this->render('create', [
                 'model' => $model,
             ]);
@@ -86,6 +97,8 @@ class SalaController extends Controller
     {
         $model = $this->findModel($id);
 
+        //actionUpload();
+        //die();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_sala]);
         } else {
@@ -128,7 +141,7 @@ class SalaController extends Controller
         $model = new UploadForm();
 
         if (Yii::$app->request->isPost) {
-            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             if ($model->upload()) {
                 // file is uploaded successfully
                 return;

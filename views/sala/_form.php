@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'unidade_v')->listBox(yii\helpers\ArrayHelper::map($modeloUnidade, 'id_unidade', 'nome')) ?>
     
     <?= $form->field($model, 'recurso_v')->checkboxList(yii\helpers\ArrayHelper::map($modeloRecurso, 'id_recurso', 'nome')) ?>
-
+    
     <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
         
     <div class="form-group">

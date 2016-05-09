@@ -46,14 +46,15 @@ class Sala extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['codigo', 'recurso_v', 'imageFiles'], 'required'],
+            [['codigo', 'recurso_v'], 'required'],
             [['tipo'], 'string', 'max' => 45],
             [['codigo', 'nome'], 'string', 'max' => 50],
             [['descricao'], 'string', 'max' => 300],
             [['latitude'], 'string', 'max' => 100],
             [['longitude'], 'string', 'max' => 100],
             [['codigo'], 'unique'],
-            //[['imageFiles'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'maxFiles' => 4],
+            //[['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+            [['imageFiles'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 4],
             //[['id_autor'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['id_autor' => 'id_usuario']],
         ];
     }
@@ -123,16 +124,19 @@ class Sala extends \yii\db\ActiveRecord
     
         public function upload()
     {
-            var_dump($this);
-                die();
-        if ($this->validate()) { 
-            foreach ($this->imageFiles as $file) {
-                $file->saveAs('assets/images/upload/'. $this->id_sala . '/'. $file->baseName . '.' . $file->extension);
-            }
-            return true;
-        } else {
-            return false;
+            
+         //if ($this->validate()) {
+            
+         mkdir(\Yii::$app->basePath . '/assets/' . $this->id_sala);
+         foreach ($this->imageFiles as $file) {
+            $file->saveAs(\Yii::$app->basePath . '/assets/' . $this->id_sala. '/' . $file->baseName . '.' . $file->extension);
+            //$this->imageFile->saveAs(\Yii::$app->basePath . '/assets/' . $this->id_sala. '/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
+          //  return true;
+        //} else {
+          //  return false;
+        //}
         }
+            
     }
 
    

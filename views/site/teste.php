@@ -8,13 +8,9 @@ $this->title = 'My Yii Application';
 <div class="site-index">
 
 
-<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);
-        
-        $form->action = yii\helpers\Url::to(['site/teste']);
-        
-        ?>
+<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 
-    <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
+    <?= $form->field($model, 'imageFile')->fileInput() ?>
 
     <button>Submit</button>
 
