@@ -106,12 +106,7 @@ class SalaController extends Controller
             $recursoXML->addChild('descricao', $recurso->descricao);
             $recursoXML->addChild('quantidade', SalaRecurso::findOne(['id_sala'=>$model->id_sala])->quantidade);
         }
-        /*
-        switch ($format) {
-            case 'xml': return $sala->asXML();break;
-            case 'json': return \yii\helpers\Json::encode($sala);break;
-        }*/
-        
+       
         return $this->render('export', [
                 'xml' => $sala->asXML(),
                 'json' => \yii\helpers\Json::encode($sala)
