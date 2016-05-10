@@ -31,6 +31,7 @@ class Sala extends \yii\db\ActiveRecord
     public $unidade_v;
     public $recurso_v;
     public $imageFiles;
+    public $email;
     //public $tipo_v;
     /**
      * @inheritdoc
@@ -48,8 +49,12 @@ class Sala extends \yii\db\ActiveRecord
         return [
             [['codigo', 'recurso_v'], 'required'],
             [['tipo'], 'string', 'max' => 45],
-            [['codigo', 'nome'], 'string', 'max' => 50],
+            [['codigo'], 'string', 'max' => 50],
+            [['codigo'], 'match', 'pattern' => '/\d-\d\d\d/', 'message'=> 'Tetse'],
+            [['nome'], 'match', 'pattern' => '/^[a-z]\w*$/i'],
+            [['nome'], 'string','max' => 50], 
             [['descricao'], 'string', 'max' => 300],
+            [['descricao'], 'match', 'pattern' => '/^[a-z]\w*$/i'],
             [['latitude'], 'string', 'max' => 100],
             [['longitude'], 'string', 'max' => 100],
             [['codigo'], 'unique'],
@@ -73,6 +78,7 @@ class Sala extends \yii\db\ActiveRecord
             'tipo' => 'Tipo',
             'latitude' => 'Latitude',
             'longitude' => 'Longitude',
+            'imageFiles' => 'Imagens',
         ];
     }
     

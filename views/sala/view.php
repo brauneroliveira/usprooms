@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Sala */
 $modelSalaUnidade = app\models\SalaUnidade::find()->where(['id_sala' => $model->id_sala])->one();
-$this->title = $model->id_sala;
+$this->title = $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Salas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -35,12 +35,52 @@ $this->params['breadcrumbs'][] = $this->title;
             'nome',
             'descricao',
             'tipo',
-            'latitude',
-            'longitude',
+            //'latitude',
+            //'longitude',
         ],
     ]) ?>
 
     <div>
+        
+        <?php 
+                //$sala = app\models\Sala::findOne('id_sala' => );  
+                $pasta = \Yii::$app->basePath . '/web/assets/images/' . $model->id_sala; 
+                //var_dump($pasta);
+                $diretorio = dir($pasta);
+                //var_dump($diretorio);
+                while(($arquivo = $diretorio->read()) !== false){
+                    //var_dump($arquivo);
+                    if ($arquivo != "." && $arquivo != "..") {
+                      $item[] = yii\helpers\Html::img('assets/images/'. $model->id_sala. '/' .$arquivo, ['class'=>'img-responsive center-block', 'height'=>'720', 'width'=>'720']);
+                    }
+                //var_dump($arquivo); die();
+               // echo '<a href='.$pasta.$arquivo.'>'.$arquivo.'</a><br />';
+                //}
+                    
+                
+                
+                }
+        
+        
+        
+        echo yii\bootstrap\Carousel::widget([
+        'items' => $item
+        //[
+        // the item contains only the image
+        //'<img src="http://www.suamelhordecoracao.com.br/wp-content/uploads/2013/12/decore-a-sala.jpg"/>',
+        // equivalent to the above
+        //['content' => '<img src="http://www.suamelhordecoracao.com.br/wp-content/uploads/2013/12/decore-a-sala.jpg"/>'],
+        // the item contains both the image and the caption
+        //[
+          //  'content' => '<img src="http://twitter.github.io/bootstrap/assets/img/bootstrap-mdo-sfmoma-03.jpg"/>',
+            //'caption' => '<h4>This is title</h4><p>This is the caption text</p>',
+            //'options' => [...],
+            //],
+         //]
+        ]);
+
+        
+        ?>
         
         <?php
         

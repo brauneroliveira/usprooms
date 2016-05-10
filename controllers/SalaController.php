@@ -116,6 +116,10 @@ class SalaController extends Controller
      */
     public function actionDelete($id)
     {
+        
+        $modeloSalaRecurso = \app\models\SalaRecurso::deleteAll('id_sala ='. $id);
+        $modeloSalaUnidade = \app\models\SalaUnidade::deleteAll('id_sala ='. $id);
+        $this->findModel($id);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

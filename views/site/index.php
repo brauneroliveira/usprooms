@@ -33,7 +33,8 @@ $this->title = 'Página 1: Página Inicial';
             foreach ($salas as $sala){
                 
                 echo '<div class="col-lg-4">';
-                echo '<h3>' . $sala->codigo . '</h2>';
+                echo '<h3>' . $sala->nome . ' '. $sala->codigo .  '</h2>';
+      
                 $pasta = \Yii::$app->basePath . '/web/assets/images/' . $sala->id_sala; 
                 //var_dump($pasta);
                 $diretorio = dir($pasta);
@@ -42,6 +43,8 @@ $this->title = 'Página 1: Página Inicial';
                     //var_dump($arquivo);
                     if ($arquivo != "." && $arquivo != "..") {
                         echo yii\helpers\Html::img('assets/images/'. $sala->id_sala . '/' .$arquivo, ['height'=>'360', 'width'=>'360']);
+                        break;
+                        
                     }
                 //var_dump($arquivo); die();
                // echo '<a href='.$pasta.$arquivo.'>'.$arquivo.'</a><br />';
