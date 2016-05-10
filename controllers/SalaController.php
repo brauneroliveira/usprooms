@@ -92,8 +92,6 @@ class SalaController extends Controller
     public function actionExport($id_sala){
         
         $model = Sala::findOne($id_sala);
-        
-        $model = \app\models\Sala::findOne(1);
     
         $sala = new \SimpleXMLElement('<sala/>');
         $autor = $sala->addChild('autor');
