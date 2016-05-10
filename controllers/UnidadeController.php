@@ -121,4 +121,13 @@ class UnidadeController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
+    public function actionSalas($id_unidade){
+        $unidade = Unidade::findOne($id_unidade);
+        $salas = $unidade->idSalas;
+        
+         return $this->render('salas', [
+                'salas' => $salas,
+            ]);
+    }
 }
