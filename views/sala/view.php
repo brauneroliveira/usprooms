@@ -65,33 +65,12 @@ $this->params['breadcrumbs'][] = $this->title;
         
         echo yii\bootstrap\Carousel::widget([
         'items' => $item
-        //[
-        // the item contains only the image
-        //'<img src="http://www.suamelhordecoracao.com.br/wp-content/uploads/2013/12/decore-a-sala.jpg"/>',
-        // equivalent to the above
-        //['content' => '<img src="http://www.suamelhordecoracao.com.br/wp-content/uploads/2013/12/decore-a-sala.jpg"/>'],
-        // the item contains both the image and the caption
-        //[
-          //  'content' => '<img src="http://twitter.github.io/bootstrap/assets/img/bootstrap-mdo-sfmoma-03.jpg"/>',
-            //'caption' => '<h4>This is title</h4><p>This is the caption text</p>',
-            //'options' => [...],
-            //],
-         //]
+       
         ]);
 
         
         ?>
-        
-        <?php
-        
-        //var_dump($model->getComentarios()->all());
-        
-        foreach ($model->getComentarios()->all() as $_comentario){
-            echo '<p>'.$_comentario->comentario.'</p>';
-        }
-        
-        ?>
-        
+               
     </div>
     
     <div>
@@ -102,8 +81,12 @@ $this->params['breadcrumbs'][] = $this->title;
         echo Html::hiddenInput('id_sala', $model->id_sala);
         echo Html::submitButton('Exportar XML/JSON');
         
-        yii\helpers\Html::endForm();
+        echo yii\helpers\Html::endForm();
     
+        
+        foreach ($model->getComentarios()->all() as $_comentario){
+            echo '<p>'.$_comentario->comentario.'</p>';
+        }
         
         $form = ActiveForm::begin();
         $form->action = yii\helpers\Url::to(['comentario/create']);

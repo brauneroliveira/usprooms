@@ -69,7 +69,7 @@ use yii\widgets\ActiveForm;
 
       }); 
 
-      marker.addListener('dragend', function(event){
+      marker.addListener('position_changed', function(event){
       
       $('#sala-latitude').val(marker.getPosition().lat());
       $('#sala-longitude').val(marker.getPosition().lng());

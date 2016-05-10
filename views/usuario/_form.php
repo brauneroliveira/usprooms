@@ -34,7 +34,7 @@ $this->title = 'Página 3. Página de Cadastro';
     'mask' => '(99) 99999-9999',
     ]) ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'email', ['enableAjaxValidation' => true])->textInput(['maxlength' => true]) ?>
     
     <?= $form->field($model, 'estado')->dropDownList(app\models\Cidade::getEstados()) ?>
     
