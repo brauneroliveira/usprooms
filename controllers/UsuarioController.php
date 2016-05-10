@@ -65,6 +65,12 @@ class UsuarioController extends Controller
     {
         $model = new Usuario();
 
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            if(!empty(\yii\widgets\ActiveForm::validate($model))){
+                return \yii\widgets\ActiveForm::validate($model);
+            }
+        }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['site/index']);
         } else {
