@@ -57,6 +57,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <div>
     <?php 
         
+        echo yii\helpers\Html::beginForm(yii\helpers\Url::to(['sala/export']), 'get');
+        
+        echo Html::hiddenInput('id_sala', $model->id_sala);
+        echo Html::submitButton('Exportar XML/JSON');
+        
+        yii\helpers\Html::endForm();
+    
+        
         $form = ActiveForm::begin();
         $form->action = yii\helpers\Url::to(['comentario/create']);
         $comentario = new \app\models\ComentarioForm();

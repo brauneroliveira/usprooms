@@ -144,7 +144,7 @@ class Sala extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Avaliacao::className(), ['id_sala' => 'id_sala']);
     }
-
+    
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -206,6 +206,6 @@ class Sala extends \yii\db\ActiveRecord
      */
     public function getIdUnidades()
     {
-        return $this->hasMany(Unidade::className(), ['id_unidade' => 'id_unidade'])->viaTable('tb_sala_unidade', ['id_sala' => 'id_sala']);
+        return $this->hasOne(Unidade::className(), ['id_unidade' => 'id_unidade'])->viaTable('tb_sala_unidade', ['id_sala' => 'id_sala']);
     }
 }

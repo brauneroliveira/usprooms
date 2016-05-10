@@ -56,17 +56,9 @@ class SiteController extends Controller
     
     public function actionTeste()
     {
-        $model = new \app\Models\UploadForm();
+        
 
-        if (Yii::$app->request->isPost) {
-            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
-            if ($model->upload()) {
-                // file is uploaded successfully
-                return;
-            }
-        }
-
-        return $this->render('teste', ['model' => $model]);
+        return $this->render('teste');
     }
 
     public function actionLogin()

@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Sala;
+use app\models\SalaUnidade;
+use app\models\SalaRecurso;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -74,6 +76,46 @@ class SalaController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+    
+    public function actionExport($id_sala){
+        
+        $model = Sala::findOne($id_sala);
+        
+        $model = \app\models\Sala::findOne(1);
+    
+        $sala = new \SimpleXMLElement('<sala/>');
+        $autor = $sala->addChild('autor');
+        $autor->addChild('nome', $model->idAutor->nome_completo);
+        $autor->addChild('email', $model->idAutor->email);
+        $sala->addChild('codigo', $model->codigo);
+        $sala->addChild('nome', $model->nome);
+        $sala->addChild('descricao', $model->descricao);
+        $sala->addChild('tipo', $model->tipo);
+        $sala->addChild('latitude', $model->latitude);
+        $sala->addChild('longitude', $model->longitude);
+        $unidade = $sala->addChild('unidade');
+        $unidade->addChild('nome', $model->idUnidades->nome);
+        $unidade->addChild('descricao', $model->idUnidades->descricao);
+        $unidade->addChild('bloco', SalaUnidade::findOne(['id_sala'=>$model->id_sala])->bloco);
+        $recursos = $sala->addChild('recursos');
+
+        foreach ($model->idRecursos as $recurso){
+            $recursoXML = $recursos->addChild('recurso');
+            $recursoXML->addChild('nome', $recurso->nome);
+            $recursoXML->addChild('descricao', $recurso->descricao);
+            $recursoXML->addChild('quantidade', SalaRecurso::findOne(['id_sala'=>$model->id_sala])->quantidade);
+        }
+        /*
+        switch ($format) {
+            case 'xml': return $sala->asXML();break;
+            case 'json': return \yii\helpers\Json::encode($sala);break;
+        }*/
+        
+        return $this->render('export', [
+                'xml' => $sala->asXML(),
+                'json' => \yii\helpers\Json::encode($sala)
+            ]);
     }
 
     /**
