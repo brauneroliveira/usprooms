@@ -106,10 +106,16 @@ class Sala extends \yii\db\ActiveRecord
         public function afterSave($insert, $changedAttributes)
     { //die();
           // if (parent::afterSave($insert, $changedAttributes)) {
-                
+               
+                //if( $modeloSalaUnidade = \app\models\SalaUnidade::findOne('id_sala' === $this->id_sala)){
+                    //die();
+                   // $modeloSalaUnidade = \app\models\SalaUnidade::findOne('id_sala' === $this->id_sala);
+                  //  $modeloSalaUnidade->id_unidade = $this->unidade_v;
+                //}
+                //else{
                 $modeloUnidade = \app\models\Unidade::find()->where('id_unidade' === $this->unidade_v)->one();
                 $this->link('idUnidades', $modeloUnidade);
-                
+                //}
                 
                  foreach ($this->recurso_v as $recurso) {
                  $modeloRecurso = \app\models\Recurso::findOne($recurso);
@@ -127,15 +133,17 @@ class Sala extends \yii\db\ActiveRecord
             
          //if ($this->validate()) {
             
-         mkdir(\Yii::$app->basePath . '/assets/' . $this->id_sala);
+         mkdir(\Yii::$app->basePath . '/web/assets/images/' . $this->id_sala);
          foreach ($this->imageFiles as $file) {
-            $file->saveAs(\Yii::$app->basePath . '/assets/' . $this->id_sala. '/' . $file->baseName . '.' . $file->extension);
+            $file->saveAs(\Yii::$app->basePath . '/web/assets/images/' . $this->id_sala. '/' . $file->baseName . '.' . $file->extension);
             //$this->imageFile->saveAs(\Yii::$app->basePath . '/assets/' . $this->id_sala. '/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
-          //  return true;
-        //} else {
-          //  return false;
-        //}
+          // return true;
         }
+        //}
+        //else {
+        //    return false;
+        
+       // }
             
     }
 
