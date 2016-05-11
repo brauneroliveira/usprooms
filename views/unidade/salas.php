@@ -37,6 +37,9 @@ use kartik\rating\StarRating;
                 unset($arquivo);
                 $diretorio->close();
                 
+                $autor = \app\models\Usuario::findOne($sala->id_autor);
+                $modeloAvaliacao = \app\models\Avaliacao::findAll(['id_sala' => $sala->id_sala]);
+                $numeroAvaliacao = count($modeloAvaliacao);
                 echo StarRating::widget(['name' => 'rating_19', 
                         'pluginOptions' => ['size'=>'xs',
                         'stars' => 5, 
@@ -47,14 +50,11 @@ use kartik\rating\StarRating;
                         //'defaultCaption' => '{rating} hearts',
                         'starCaptions'=>[]
                         ]
-                    ]);
+                    ]); 
                 
-                
-                $autor = \app\models\Usuario::findOne($sala->id_autor);
-                //var_dump($autor);
-                //die();
-                echo '<b> Autor: </b> '.'<p>' . $autor->nome_completo . '</p>';
-                echo '<b> Descrição: </b> '.'<p>' . $sala->descricao . '</p>';
+                echo '<b> Avaliadores:</b> '. $numeroAvaliacao;
+                echo '<p><b> Autor:</b> '.$autor->nome_completo.'</p>';
+                echo '<b> Descrição:</b> <p>'.$sala->descricao.'</p>';
                 //echo yii\helpers\Html::a('Veja mais', 'index.php?r=sala%2Fview&id='. $sala->id_sala, ['class' =>'btn btn-default']);
                 //echo '<p><a class="btn btn-default" href="index.php?r=sala%2Fview&id=52">Veja mais</a></p>';
                 echo '</div>';

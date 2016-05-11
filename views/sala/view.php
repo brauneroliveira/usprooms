@@ -13,10 +13,20 @@ $modelSalaUnidade = app\models\SalaUnidade::find()->where(['id_sala' => $model->
 $this->title = $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Salas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$autor = \app\models\Usuario::findOne($model->id_autor);
+$salaUnidade = \app\models\SalaUnidade::findOne($model->id_sala)->id_unidade;
+$unidade = \app\models\Unidade::findOne($salaUnidade);
+//$salaRecurso = $model->idRecursos;  
+//\app\models\SalaRecurso::find()->where(['id_sala' => $model->id_sala])->all();
+//$recursos = app\models\Recurso::find()->where(['id_recurso' => $salaRecurso->id_recurso])->all();
+foreach ($model->idRecursos as $recursos) {
+    $salaRecursos[] = $recursos->nome;
+}
+
 ?>
 <div class="sala-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title)?></h1>
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id_sala], ['class' => 'btn btn-primary']) ?>
@@ -27,25 +37,35 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a('Exportar XML/JSON' , ['export', 'id_sala' => $model->id_sala], ['class' => 'btn btn-info'])?>
+         
     </p>
-
+    
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id_sala',
-            'id_autor',
+            ['label'=>'Autor', 'value' => $autor->nome_completo],
+            //'id_autor',
+            //'autor' => $autor->nome_completo,
             'codigo',
             'nome',
-            'descricao',
             'tipo',
-            //'latitude',
-            //'longitude',
+            ['label'=>'Unidade', 'value' => $unidade->nome],
+            ['label'=>'Recursos', 'value' => implode(', ', $salaRecursos)],
+            'descricao',
+            'latitude',
+            'longitude',
         ],
-    ]) ?>
+     ]) ?>
+    
+   
 
     <div>
         
         <?php 
+        
+        
                 //$sala = app\models\Sala::findOne('id_sala' => );  
                 $pasta = \Yii::$app->basePath . '/web/assets/images/' . $model->id_sala; 
                 //var_dump($pasta);
@@ -55,23 +75,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     //var_dump($arquivo);
                     if ($arquivo != "." && $arquivo != "..") {
                       $item[] = yii\helpers\Html::img('assets/images/'. $model->id_sala. '/' .$arquivo, ['class'=>'img-responsive center-block', 'height'=>'720', 'width'=>'720']);
-                    }
-                //var_dump($arquivo); die();
-               // echo '<a href='.$pasta.$arquivo.'>'.$arquivo.'</a><br />';
-                //}
-                    
-                
-                
+                    }  
                 }
-        
-        
-        
         echo yii\bootstrap\Carousel::widget([
         'items' => $item
-       
         ]);
-
-        
         ?>
                
     </div>
@@ -79,10 +87,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <div>
     <?php 
         
-        echo yii\helpers\Html::beginForm(yii\helpers\Url::to(['sala/export']), 'get');
-        
         echo Html::hiddenInput('id_sala', $model->id_sala);
-        echo Html::submitButton('Exportar XML/JSON');
+        
         
         echo yii\helpers\Html::endForm();
     
@@ -109,15 +115,13 @@ $this->params['breadcrumbs'][] = $this->title;
             $model = new \app\models\Avaliacao();
             echo $form->field($model, 'avaliacao')->widget(StarRating::className(), [
             'pluginOptions' => ['size'=>'xs', 'stars' => 5, 
-        'min' => 0,
-        'max' => 5,
-        'step' => 1,
-         //'filledStar' =>2,
-        'symbol' => html_entity_decode('&#xe005;', ENT_QUOTES, "utf-8"),
-        //'defaultCaption' => '{rating} hearts',
-                
-        'starCaptions'=>[]]
-         ]);?>
+            'min' => 0,
+            'max' => 5,
+            'step' => 1,
+            //'filledStar' =>2,
+            'symbol' => html_entity_decode('&#xe005;', ENT_QUOTES, "utf-8"),    
+            'starCaptions'=>[]]
+            ]);?>
 
     <?php ActiveForm::end(); 
     //$this->registerJs("$('#avaliacao-avaliacao').rating('update', 3);", \yii\web\View::POS_END);
