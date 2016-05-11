@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\widgets\ActiveForm;
+use kartik\rating\StarRating;
+
+
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Sala */
@@ -100,8 +103,25 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="form-group">
         <?= Html::submitButton('Comentar', ['class' => 'btn btn-success']) ?>
         </div>
+        
+       <?php
+       
+            $model = new \app\models\Avaliacao();
+            echo $form->field($model, 'avaliacao')->widget(StarRating::className(), [
+            'pluginOptions' => ['size'=>'xs', 'stars' => 5, 
+        'min' => 0,
+        'max' => 5,
+        'step' => 1,
+         //'filledStar' =>2,
+        'symbol' => html_entity_decode('&#xe005;', ENT_QUOTES, "utf-8"),
+        //'defaultCaption' => '{rating} hearts',
+                
+        'starCaptions'=>[]]
+         ]);?>
 
-    <?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); 
+    //$this->registerJs("$('#avaliacao-avaliacao').rating('update', 3);", \yii\web\View::POS_END);
+    ?>
         
     </div>
     

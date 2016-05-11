@@ -128,6 +128,7 @@ class UnidadeController extends Controller
         
          return $this->render('salas', [
                 'salas' => $salas,
+                'unidade' =>$unidade->nome,
             ]);
     }
 }
