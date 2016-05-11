@@ -33,15 +33,18 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+    $unidades = \app\models\Unidade::find()->all();
+    foreach ($unidades as $unidade) {
+        $items[] = ['label' => $unidade->nome, 'url' => yii\helpers\Url::to(['unidade/salas', 'id_unidade'=>$unidade->id_unidade])];
+    }
+    
+    
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             
              ['label' => 'Categorias', 'url' => ['/categoria/index'],
-                'items' => [
-                 ['label' => 'ICMC-USP', 'url' => '#'],
-                 ['label' => 'EESC-USP', 'url' => '#'],
-            ],
+                'items' => $items,
         ],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Cadastre-se', 'url' => ['/usuario/create']]) : (''),
