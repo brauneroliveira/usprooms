@@ -18,18 +18,8 @@ $this->title = 'Página 1: Página Inicial';
 
         <?php
         $salas = app\models\Sala::find()->all();
-        //var_dump($salas); die();
-        $unidades = [
-            'ICMC' => ['SALA 1','SALA 2','SALA 3','SALA 4','SALA 5', 'SALA 6'],
-            'EESC' => ['SALA 1','SALA 2','SALA 3','SALA 4','SALA 5', 'SALA 6'],
-            'IQSC' => ['SALA 1','SALA 2','SALA 3','SALA 4','SALA 5', 'SALA 6'],
-            'IAU'  => ['SALA 1','SALA 2','SALA 3','SALA 4','SALA 5', 'SALA 6'],
-        ];
         
-        //foreach ($unidades as $unidade => $salas){
-        //    echo '<div class="row">';
-         //   echo '<h2>' . $unidade . '</h1>';
-            
+
              foreach ($salas as $sala){
                 
                 echo '<div class="col-lg-4">';
@@ -50,11 +40,6 @@ $this->title = 'Página 1: Página Inicial';
                         break;
                         
                     }
-                //var_dump($arquivo); die();
-               // echo '<a href='.$pasta.$arquivo.'>'.$arquivo.'</a><br />';
-                //}
-                    
-                
                 
                 }
                 unset($arquivo);
@@ -78,14 +63,9 @@ $this->title = 'Página 1: Página Inicial';
                 echo '<b> Avaliadores:</b> '. $numeroAvaliacao;
                 echo '<p><b> Autor:</b> '.$autor->nome_completo.'</p>';
                 echo '<b> Descrição:</b> <p>'.$sala->descricao.'</p>';
-                //echo yii\helpers\Html::a('Veja mais', 'index.php?r=sala%2Fview&id='. $sala->id_sala, ['class' =>'btn btn-default']);
-                //echo '<p><a class="btn btn-default" href="index.php?r=sala%2Fview&id=52">Veja mais</a></p>';
                 echo '</div>';
             
-                
-                    //$model = new \app\models\Avaliacao();
-                  
-                //$this->registerJs("$("[name='rating']").rating('update', 3);", \yii\web\View::POS_END);
+              
     
             }
             echo '</div>';

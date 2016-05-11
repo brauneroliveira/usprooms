@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
     
     ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'value' => $modeloAutor->email, 'readOnly'=>true])->label('Autor') ?>
+    <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'value' => $modeloAutor->nome_completo, 'readOnly'=>true])->label('Autor') ?>
     
     <?= $form->field($model, 'codigo')->widget(\yii\widgets\MaskedInput::className(), [
     'mask' => '*-***',])->label('Código da Sala') ?>
@@ -33,9 +33,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'descricao')->textarea(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'tipo')->listBox(['Sala de Aula' => 'Sala de Aula','Auditório' => 'Auditório','Sala de Reunião' => 'Sala de Reunião', 'Laboratorio' => 'Laboratorio', 'Escritorio'=>'Escritorio'])?>
+    <?= $form->field($model, 'tipo')->dropDownList(['Sala de Aula' => 'Sala de Aula','Auditório' => 'Auditório','Sala de Reunião' => 'Sala de Reunião', 'Laboratorio' => 'Laboratorio', 'Escritorio'=>'Escritorio'])?>
     
-    <?= $form->field($model, 'unidade_v')->listBox(yii\helpers\ArrayHelper::map($modeloUnidade, 'id_unidade', 'nome'))->label('Unidade Alocada') ?> 
+    <?= $form->field($model, 'unidade_v')->dropDownList(yii\helpers\ArrayHelper::map($modeloUnidade, 'id_unidade', 'nome'))->label('Unidade Alocada') ?> 
     
     <?= $form->field($model, 'recurso_v')->checkboxList(yii\helpers\ArrayHelper::map($modeloRecurso, 'id_recurso', 'nome'))->label('Recursos Disponíveis') ?>
     
@@ -43,9 +43,9 @@ use yii\widgets\ActiveForm;
     
     <div id="map" style="width:500px;height:380px;"></div>
     
-    <?= $form->field($model, 'latitude')->textInput(); ?>
+    <?= $form->field($model, 'latitude')->textInput(['readOnly' => true]); ?>
     
-    <?= $form->field($model, 'longitude')->textInput(); ?>
+    <?= $form->field($model, 'longitude')->textInput(['readOnly' => true]); ?>
     
     <script type="text/javascript">
 

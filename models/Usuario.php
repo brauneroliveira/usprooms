@@ -46,6 +46,7 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             ['data_nascimento', 'date', 'format' => 'dd/MM/yyyy'],
             ['data_nascimento', 'validarIdade', 'skipOnError' => false],
             [['nome_completo'], 'string', 'max' => 45],
+            [['nome_completo', 'cidade'], 'match', 'pattern' => '/^[a-zA-Z\s]*$/', 'message' => 'O nome deve conter apenas caracteres.'],
             [['telefone'], 'string', 'max' => 15],
             [['email'], 'string', 'max' => 100],
             [['senha'], 'string', 'max' => 60],
@@ -69,6 +70,7 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'email' => 'Email',
             'senha' => 'Senha',
             'chave_autenticacao' => 'Chave Autenticacao',
+            'chaveSenha' => 'Senha'
         ];
     }
     

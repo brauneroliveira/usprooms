@@ -44,10 +44,7 @@ foreach ($model->idRecursos as $recursos) {
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id_sala',
             ['label'=>'Autor', 'value' => $autor->nome_completo],
-            //'id_autor',
-            //'autor' => $autor->nome_completo,
             'codigo',
             'nome',
             'tipo',
@@ -98,35 +95,40 @@ foreach ($model->idRecursos as $recursos) {
             echo '<blockquote><p><strong>' . $autor . '</strong>' . ': ' .$_comentario->comentario.'</p></blockquote>';
         }
         
+        if(!Yii::$app->user->isGuest){
+        
         $form = ActiveForm::begin();
+
         $form->action = yii\helpers\Url::to(['comentario/create']);
         $comentario = new \app\models\ComentarioForm();
         
-        ?>
+        echo $form->field($comentario, 'comentario')->textarea(['maxlength' => true]);
+        echo Html::hiddenInput('id_sala', $model->id_sala);
         
-        <?= $form->field($comentario, 'comentario')->textarea(['maxlength' => true]) ?>
-        <?= Html::hiddenInput('id_sala', $model->id_sala) ?>
-
-        <div class="form-group">
-        <?= Html::submitButton('Comentar', ['class' => 'btn btn-success']) ?>
-        </div>
+        echo '<div class="form-group">';
+        echo Html::submitButton('Comentar', ['class' => 'btn btn-success']);
+        echo '</div>';
         
-       <?php
-       
+        ActiveForm::end();
+        
+        }
+        
+        $formAvaliacao = ActiveForm::begin();
+        
             $model = new \app\models\Avaliacao();
-            echo $form->field($model, 'avaliacao')->widget(StarRating::className(), [
+            echo $formAvaliacao->field($model, 'avaliacao')->widget(StarRating::className(), [
             'pluginOptions' => ['size'=>'xs', 'stars' => 5, 
             'min' => 0,
             'max' => 5,
             'step' => 1,
-            //'filledStar' =>2,
             'symbol' => html_entity_decode('&#xe005;', ENT_QUOTES, "utf-8"),    
             'starCaptions'=>[]]
-            ]);?>
+            ]);
+            
+            ActiveForm::end();
+            
+            ?>
 
-    <?php ActiveForm::end(); 
-    //$this->registerJs("$('#avaliacao-avaliacao').rating('update', 3);", \yii\web\View::POS_END);
-    ?>
         
     </div>
     

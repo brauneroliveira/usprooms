@@ -47,20 +47,18 @@ class Sala extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['codigo', 'recurso_v'], 'required'],
+            [['codigo', 'recurso_v', 'imageFiles'], 'required'],
             [['tipo'], 'string', 'max' => 45],
             [['codigo'], 'string', 'max' => 50],
             [['codigo'], 'match', 'pattern' => '/\d-\d\d\d/', 'message'=> 'Tetse'],
-            [['nome'], 'match', 'pattern' => '/^[a-z]\w*$/i'],
+            [['nome'], 'match', 'pattern' => '/^[a-zA-Z0-9\s]*$/'],
             [['nome'], 'string','max' => 50], 
             [['descricao'], 'string', 'max' => 300],
-            [['descricao'], 'match', 'pattern' => '/^[a-z]\w*$/i'],
+            [['descricao'], 'match', 'pattern' => '/^[a-zA-Z0-9\s]*$/'],
             [['latitude'], 'string', 'max' => 100],
             [['longitude'], 'string', 'max' => 100],
             [['codigo'], 'unique'],
-            //[['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
             [['imageFiles'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 4],
-            //[['id_autor'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['id_autor' => 'id_usuario']],
         ];
     }
 
@@ -87,22 +85,7 @@ class Sala extends \yii\db\ActiveRecord
     {
            if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {     
-               
-               //$this->unidade_v
-                //$order->link('items', $item);        
-                        
-                //$this->tipo = $this->tipo_v;
-               //$this->tipo->save();
-                //var_dump($unidade_v); 
-                
-               // $model_SalaUnidade = new SalaUnidade();
-                //$model_SalaUnidade->id_sala = $this->id_sala;
-                //$model_SalaUnidade->id_categoria = $this->unidade_v;
-                //$model_SalaUnidade->save();
-
-                
                 $this->id_autor = Yii::$app->getUser()->id;
-               
             }
             return true;
         }
@@ -110,47 +93,27 @@ class Sala extends \yii\db\ActiveRecord
     }
     
         public function afterSave($insert, $changedAttributes)
-    { //die();
-          // if (parent::afterSave($insert, $changedAttributes)) {
-               
-                //if( $modeloSalaUnidade = \app\models\SalaUnidade::findOne('id_sala' === $this->id_sala)){
-                    //die();
-                   // $modeloSalaUnidade = \app\models\SalaUnidade::findOne('id_sala' === $this->id_sala);
-                  //  $modeloSalaUnidade->id_unidade = $this->unidade_v;
-                //}
-                //else{
-                $modeloUnidade = \app\models\Unidade::find()->where('id_unidade' === $this->unidade_v)->one();
-                $this->link('idUnidades', $modeloUnidade);
-                //}
-                
-                 foreach ($this->recurso_v as $recurso) {
-                 $modeloRecurso = \app\models\Recurso::findOne($recurso);
-                 $this->link('idRecursos', $modeloRecurso);
-                }
-                
-            
-           // return true;
-        //}
-        return false;
-    }
+        { 
+            $modeloUnidade = \app\models\Unidade::findOne($this->unidade_v);
+
+            $this->link('idUnidades', $modeloUnidade);
+
+            foreach ($this->recurso_v as $recurso) {
+            $modeloRecurso = \app\models\Recurso::findOne($recurso);
+            $this->link('idRecursos', $modeloRecurso);
+
+            }
+            return false;
+        }
     
         public function upload()
     {
             
-         //if ($this->validate()) {
-            
+
          mkdir(\Yii::$app->basePath . '/web/assets/images/' . $this->id_sala);
          foreach ($this->imageFiles as $file) {
             $file->saveAs(\Yii::$app->basePath . '/web/assets/images/' . $this->id_sala. '/' . $file->baseName . '.' . $file->extension);
-            //$this->imageFile->saveAs(\Yii::$app->basePath . '/assets/' . $this->id_sala. '/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
-          // return true;
         }
-        //}
-        //else {
-        //    return false;
-        
-       // }
-            
     }
 
    

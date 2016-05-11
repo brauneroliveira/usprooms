@@ -43,9 +43,12 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             
-             ['label' => 'Categorias', 'url' => ['/categoria/index'],
+             ['label' => 'Unidades',
                 'items' => $items,
         ],
+             !Yii::$app->user->isGuest ? (
+                ['label' => 'Criar Sala', 'url' => ['/sala/create']]) : (''),
+            
             Yii::$app->user->isGuest ? (
                 ['label' => 'Cadastre-se', 'url' => ['/usuario/create']]) : (''),
             
@@ -66,24 +69,29 @@ AppAsset::register($this);
     
     $salas = \app\models\Sala::find()->all();
     
-    foreach ($salas as $sala) {
-    $searchData[] = $sala->codigo;
-    $searchData[] = $sala->nome;
-    
-}
-    echo '<div class="navbar-form navbar-right">';
-    echo yii\helpers\Html::beginForm(yii\helpers\Url::to(['sala/search']), 'get');
-    echo yii\jui\AutoComplete::widget([
+    if(!empty($salas))
+    {
+        foreach ($salas as $sala) {
+        $searchData[] = $sala->codigo;
+        $searchData[] = $sala->nome;
+
+        }
+        echo '<div class="navbar-form navbar-right">';
+        echo yii\helpers\Html::beginForm(yii\helpers\Url::to(['sala/search']), 'get');
+        echo yii\jui\AutoComplete::widget([
         'name' => 'search_string',
         'options' => ['class' => 'form-control', 'style' => 'width: auto;'],
         'clientOptions' => [
         'source' => $searchData,
-    ],
-]);
-    echo Html::submitButton('Pesquisar', ['style' => 'position: absolute; left: -9999px; width: 1px; height: 1px;']);
-    echo yii\helpers\Html::endForm();
+        ],
+        ]);
+        echo Html::submitButton('Pesquisar', ['style' => 'position: absolute; left: -9999px; width: 1px; height: 1px;']);
+        echo yii\helpers\Html::endForm();
+
+        echo '</div>';
+    }
     
-    echo '</div>';
+    
     
     NavBar::end();
     ?>
