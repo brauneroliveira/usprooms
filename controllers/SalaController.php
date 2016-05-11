@@ -189,6 +189,22 @@ class SalaController extends Controller
 
         return $this->render('upload', ['model' => $model]);
     }
+    
+    public function actionSearch($search_string){
+        
+        $salas;
+        
+        if(preg_match('/\d-\d\d\d/', $search_string)){
+            $salas = Sala::findAll(['codigo' => $search_string]);
+        }
+        else{
+            $salas = Sala::find()->where(['like', 'nome', $search_string])->all();
+        }
+        
+        return $this->render('search', [
+            'salas' => $salas,
+        ]);
+    }
 }
 
 
