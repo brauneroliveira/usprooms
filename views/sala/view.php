@@ -88,7 +88,8 @@ $this->params['breadcrumbs'][] = $this->title;
     
         
         foreach ($model->getComentarios()->all() as $_comentario){
-            echo '<p>'.$_comentario->comentario.'</p>';
+            $autor = $_comentario->idUsuario->nome_completo;
+            echo '<blockquote><p><strong>' . $autor . '</strong>' . ': ' .$_comentario->comentario.'</p></blockquote>';
         }
         
         $form = ActiveForm::begin();
