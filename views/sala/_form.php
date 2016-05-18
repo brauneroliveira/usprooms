@@ -16,13 +16,8 @@ use yii\widgets\ActiveForm;
         $autor = Yii::$app->getUser()->id;
         $modeloAutor = \app\models\Usuario::findOne($autor);
     ?>
-    
-    
-    
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); 
-    
-    
-    ?>
+     
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'value' => $modeloAutor->nome_completo, 'readOnly'=>true])->label('Autor') ?>
     

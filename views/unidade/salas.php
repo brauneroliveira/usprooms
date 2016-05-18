@@ -9,14 +9,17 @@ $this->title = 'USProoms - Salas da unidade ' . $unidade;
 
 $this->registerMetaTag(['name' => 'description=', 'content' => 'Veja quais são as salas cadastradas da unidade escolhida.']);
 
+$this->params['breadcrumbs'][] = ['label' => 'Unidades', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
+
 ?>
-    <h1> <?= $unidade ?> </h1>
+    <h1> <?= 'Salas da unidade ' . $unidade ?> </h1>
   <?php
     foreach ($salas as $sala){
                 
                 echo '<div class="col-lg-4">';
                 echo yii\helpers\Html::a('<h3>' . $sala->nome . ' '. $sala->codigo .  '</h2>', 
-                        'index.php?r=sala%2Fview&id='. $sala->id_sala);
+                        yii\helpers\Url::to(['sala/view', 'id' => $sala->id_sala]));
       
                 $pasta = \Yii::$app->basePath . '/web/assets/images/' . $sala->id_sala; 
 
