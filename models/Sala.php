@@ -47,10 +47,10 @@ class Sala extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['codigo', 'recurso_v', 'imageFiles'], 'required'],
+            [['codigo', 'recurso_v', 'unidade_v', 'imageFiles'], 'required'],
             [['tipo'], 'string', 'max' => 45],
             [['codigo'], 'string', 'max' => 50],
-            [['codigo'], 'match', 'pattern' => '/\d-\d\d\d/', 'message'=> 'Tetse'],
+            [['codigo'], 'match', 'pattern' => '/\d-\d\d\d/', 'message'=> 'O código da sala deve seguir o padrão X-XXX.'],
             [['nome'], 'match', 'pattern' => '/^[a-zA-Z0-9\s]*$/'],
             [['nome'], 'string','max' => 50], 
             [['descricao'], 'string', 'max' => 300],
