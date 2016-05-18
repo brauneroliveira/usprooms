@@ -10,7 +10,7 @@ use kartik\rating\StarRating;
 /* @var $this yii\web\View */
 /* @var $model app\models\Sala */
 $modelSalaUnidade = app\models\SalaUnidade::find()->where(['id_sala' => $model->id_sala])->one();
-$this->title = $model->nome;
+$this->title = 'USProoms - Sala: ' . $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Salas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $autor = \app\models\Usuario::findOne($model->id_autor);

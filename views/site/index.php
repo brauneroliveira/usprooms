@@ -2,7 +2,7 @@
 use kartik\rating\StarRating;
 /* @var $this yii\web\View */
 
-$this->title = 'Página 1: Página Inicial';
+$this->title = 'USProoms - Encontre uma sala no campus da USP';
 ?>
 <div class="site-index">
 <!--

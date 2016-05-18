@@ -2,6 +2,8 @@
 
 use kartik\rating\StarRating;
 
+$this->title = 'USProoms - Resultado da pesquisa';
+
 foreach ($salas as $sala){
                 
                 echo '<div class="col-lg-4">';

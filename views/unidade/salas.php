@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\widgets\ActiveForm;
 use kartik\rating\StarRating;
+
+$this->title = 'USProoms - Salas da unidade ' . $unidade;
 ?>
     <h1> <?= $unidade ?> </h1>
   <?php

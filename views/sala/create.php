@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Sala */
 
-$this->title = 'Create Sala';
+$this->title = 'USProoms - Criar nova sala';
 $this->params['breadcrumbs'][] = ['label' => 'Salas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
