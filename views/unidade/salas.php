@@ -22,10 +22,14 @@ $this->title = 'USProoms - Salas da unidade ' . $unidade;
                 while(($arquivo = $diretorio->read()) !== false){
 
                     if ($arquivo != "." && $arquivo != "..") {
-                        $image = yii\helpers\Html::img('assets/images/'. $sala->id_sala . '/' .$arquivo, 
-                                ['height'=>'360', 'width'=>'360']);
+                        $image = yii\helpers\Html::img('/usprooms/web/assets/images/'. $sala->id_sala . '/' .$arquivo, 
+                                [
+                                    'height'=>'360', 
+                                    'width'=>'360',
+                                    'alt'=>'Foto da sala ' . $sala->nome
+                                    ]);
                         
-                        echo yii\helpers\Html::a($image, 'index.php?r=sala%2Fview&id='. $sala->id_sala);
+                        echo yii\helpers\Html::a($image, yii\helpers\Url::to(['sala/view', 'id' => $sala->id_sala]));
       
                         break;
                         

@@ -33,9 +33,14 @@ $this->title = 'USProoms - Encontre uma sala no campus da USP';
                 while(($arquivo = $diretorio->read()) !== false){
                     //var_dump($arquivo);
                     if ($arquivo != "." && $arquivo != "..") {
-                        $image = yii\helpers\Html::img('assets/images/'. $sala->id_sala . '/' .$arquivo, ['height'=>'360', 'width'=>'360', 'href'=>'http://www.w3schools.com']);
+                        $image = yii\helpers\Html::img('assets/images/'. $sala->id_sala . '/' .$arquivo, 
+                                [
+                                    'height'=>'360', 
+                                    'width'=>'360', 
+                                    'alt'=>'Foto da sala ' . $sala->nome
+                                ]);
                         
-                        echo yii\helpers\Html::a($image, 'index.php?r=sala%2Fview&id='. $sala->id_sala);
+                        echo yii\helpers\Html::a($image, yii\helpers\Url::to(['sala/view', 'id' => $sala->id_sala]));
       
                         break;
                         

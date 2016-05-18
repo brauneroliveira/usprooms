@@ -5,8 +5,6 @@ use yii\widgets\DetailView;
 use yii\widgets\ActiveForm;
 use kartik\rating\StarRating;
 
-
-
 /* @var $this yii\web\View */
 /* @var $model app\models\Sala */
 $modelSalaUnidade = app\models\SalaUnidade::find()->where(['id_sala' => $model->id_sala])->one();
@@ -16,9 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $autor = \app\models\Usuario::findOne($model->id_autor);
 $salaUnidade = \app\models\SalaUnidade::findOne($model->id_sala)->id_unidade;
 $unidade = \app\models\Unidade::findOne($salaUnidade);
-//$salaRecurso = $model->idRecursos;  
-//\app\models\SalaRecurso::find()->where(['id_sala' => $model->id_sala])->all();
-//$recursos = app\models\Recurso::find()->where(['id_recurso' => $salaRecurso->id_recurso])->all();
+
 foreach ($model->idRecursos as $recursos) {
     $salaRecursos[] = $recursos->nome;
 }
@@ -55,25 +51,26 @@ foreach ($model->idRecursos as $recursos) {
             'longitude',
         ],
      ]) ?>
-    
-   
 
     <div>
         
         <?php 
         
-        
-                //$sala = app\models\Sala::findOne('id_sala' => );  
-                $pasta = \Yii::$app->basePath . '/web/assets/images/' . $model->id_sala; 
-                //var_dump($pasta);
-                $diretorio = dir($pasta);
-                //var_dump($diretorio);
-                while(($arquivo = $diretorio->read()) !== false){
-                    //var_dump($arquivo);
-                    if ($arquivo != "." && $arquivo != "..") {
-                      $item[] = yii\helpers\Html::img('assets/images/'. $model->id_sala. '/' .$arquivo, ['class'=>'img-responsive center-block', 'height'=>'720', 'width'=>'720']);
-                    }  
-                }
+        $pasta = \Yii::$app->basePath . '/web/assets/images/' . $model->id_sala; 
+
+        $diretorio = dir($pasta);
+
+        while(($arquivo = $diretorio->read()) !== false){
+            if ($arquivo != "." && $arquivo != "..") {
+                $item[] = yii\helpers\Html::img('/usprooms/web/assets/images/'. $model->id_sala. '/' .$arquivo, 
+                        [
+                            'class'=>'img-responsive center-block', 
+                            'height'=>'720', 
+                            'width'=>'720',
+                            'alt'=>'Foto da sala ' . $model->nome
+                        ]);
+            }  
+        }
         echo yii\bootstrap\Carousel::widget([
         'items' => $item
         ]);

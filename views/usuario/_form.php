@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 
 <?php
 
-$this->title = 'Página 3. Página de Cadastro';
+$this->title = 'USProoms - Cadastre-se';
 
 ?>
 

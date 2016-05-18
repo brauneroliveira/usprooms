@@ -2,3 +2,4 @@
 config/db.php
 vendor/*
 nbproject/
+web/assets/images/*
