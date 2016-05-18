@@ -15,6 +15,9 @@ $autor = \app\models\Usuario::findOne($model->id_autor);
 $salaUnidade = \app\models\SalaUnidade::findOne($model->id_sala)->id_unidade;
 $unidade = \app\models\Unidade::findOne($salaUnidade);
 
+$this->registerMetaTag(['name' => 'description=', 'content' => 'Essa página apresenta todas as informações da '
+    . 'sala que você está visualizando, tais como sua localização, recursos e tipo.']);
+
 foreach ($model->idRecursos as $recursos) {
     $salaRecursos[] = $recursos->nome;
 }

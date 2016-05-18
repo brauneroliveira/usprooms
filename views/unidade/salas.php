@@ -6,6 +6,9 @@ use yii\widgets\ActiveForm;
 use kartik\rating\StarRating;
 
 $this->title = 'USProoms - Salas da unidade ' . $unidade;
+
+$this->registerMetaTag(['name' => 'description=', 'content' => 'Veja quais são as salas cadastradas da unidade escolhida.']);
+
 ?>
     <h1> <?= $unidade ?> </h1>
   <?php

@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 <?php
 
 $this->title = 'USProoms - Cadastre-se';
-
+$this->registerMetaTag(['name' => 'description=', 'content' => 'Cadastre-se em nosso site para poder contribuir com o cadastro de novas salas no sistema e também comentar nas salas existentes.']);
 ?>
 
 <div class="usuario-form">

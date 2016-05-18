@@ -2,6 +2,7 @@
 use kartik\rating\StarRating;
 /* @var $this yii\web\View */
 
+$this->registerMetaTag(['name' => 'description=', 'content' => 'Encontre todas as sala do campus da USP. Veja seus recursos, localizaçao e comentarios!']);
 $this->title = 'USProoms - Encontre uma sala no campus da USP';
 ?>
 <div class="site-index">
