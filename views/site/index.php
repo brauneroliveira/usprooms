@@ -2,7 +2,7 @@
 use kartik\rating\StarRating;
 /* @var $this yii\web\View */
 
-$this->registerMetaTag(['name' => 'description=', 'content' => 'Encontre todas as sala do campus da USP. Veja seus recursos, localizaçao e comentarios!']);
+$this->registerMetaTag(['name' => 'description=', 'content' => 'Encontre todas as sala do campus da USP. Veja seus recursos, localização e comentários!']);
 $this->title = 'USProoms - Encontre uma sala no campus da USP';
 ?>
 <div class="site-index">
@@ -18,15 +18,15 @@ $this->title = 'USProoms - Encontre uma sala no campus da USP';
              foreach ($salas as $sala){
                 
                 echo '<div class="col-lg-4">';
-                echo yii\helpers\Html::a('<h3>' . $sala->nome . ' '. $sala->codigo .  '</h2>', 
+                echo yii\helpers\Html::a('<h2>' . $sala->nome . ' '. $sala->codigo .  '</h2>', 
                         'index.php?r=sala%2Fview&id='. $sala->id_sala);
       
                 $pasta = \Yii::$app->basePath . '/web/assets/images/' . $sala->id_sala; 
-                //var_dump($pasta);
+
                 $diretorio = dir($pasta);
-                //var_dump($diretorio);
+
                 while(($arquivo = $diretorio->read()) !== false){
-                    //var_dump($arquivo);
+
                     if ($arquivo != "." && $arquivo != "..") {
                         $image = yii\helpers\Html::img('assets/images/'. $sala->id_sala . '/' .$arquivo, 
                                 [
@@ -40,7 +40,6 @@ $this->title = 'USProoms - Encontre uma sala no campus da USP';
                         break;
                         
                     }
-                
                 }
                 unset($arquivo);
                 $diretorio->close();
@@ -60,9 +59,9 @@ $this->title = 'USProoms - Encontre uma sala no campus da USP';
                         ]
                     ]); 
                 
-                echo '<b> Avaliadores:</b> '. $numeroAvaliacao;
-                echo '<p><b> Autor:</b> '.$autor->nome_completo.'</p>';
-                echo '<b> Descrição:</b> <p>'.$sala->descricao.'</p>';
+                echo '<strong> Avaliadores:</strong> '. $numeroAvaliacao;
+                echo '<p><strong> Autor:</strong> '.$autor->nome_completo.'</p>';
+                echo '<strong> Descrição:</strong> <p>'.$sala->descricao.'</p>';
                 echo '</div>';
             
               
